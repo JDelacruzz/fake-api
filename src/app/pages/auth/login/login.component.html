@@ -1,0 +1,46 @@
+<div class="form-signin">
+  <div class="w-50 m-auto text-center">
+    <img
+      class="mb-4 d-block m-auto"
+      src="./assets/img/profile.png"
+      alt=""
+      width="150"
+      height="150"
+    />
+    <h1 class="h3 mb-3 fw-normal">Login</h1>
+
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control mt-4"
+        id="floatingInput"
+        placeholder="username"
+        [value]="username"
+        #txtUsername
+      />
+      <label for="floatingInput">Username</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="password"
+        class="form-control mt-4"
+        id="floatingPassword"
+        placeholder="Password"
+        [value]="password"
+        #txtPassword
+      />
+      <label for="floatingPassword">Password</label>
+    </div>
+
+    <!-- <div class="checkbox mb-3">
+      <label> <input type="checkbox" value="remember-me" /> Remember me </label>
+    </div> -->
+    <button
+      class="w-100 btn btn-lg btn-primary mt-4"
+      (click)="login(txtUsername.value, txtPassword.value)"
+    >
+      Sign in
+    </button>
+    <p class="mt-5 mb-3 text-muted">© 2017–2021</p>
+  </div>
+</div>

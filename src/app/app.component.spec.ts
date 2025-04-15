@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'fake-api' title`, () => {
+  it(`should have the 'fakestore-login' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('fake-api');
+    expect(app.title).toEqual('fakestore-login');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, fake-api');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, fakestore-login');
   });
 });
