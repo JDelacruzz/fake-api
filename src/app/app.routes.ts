@@ -5,6 +5,7 @@ export const routes: Routes = [
   {
     path: '',
     title: 'Products',
+    canActivate: [authGuard],
     loadChildren: () => import('./pages/products/product.route'),
   },
   {
@@ -21,10 +22,7 @@ export const routes: Routes = [
   {
     path: 'cart',
     title: 'Cart',
+    canActivate: [authGuard],
     loadComponent: () => import('./pages/cart/cart.component'),
-  },
-  {
-    path: '**',
-    redirectTo: 'products',
   },
 ];
