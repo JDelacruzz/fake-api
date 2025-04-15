@@ -47,3 +47,8 @@ export interface Name {
   firstname: string;
   lastname: string;
 }
+
+export interface ProductItemCart {
+  product: Product;
+  quantity: number;
+}
