@@ -1,9 +1,10 @@
 import { Component, input, output } from '@angular/core';
 import { ProductItemCart } from '../../interfaces/store.interfaces';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-cart-product',
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './cart-product.component.html',
   styleUrl: './cart-product.component.css'
 })

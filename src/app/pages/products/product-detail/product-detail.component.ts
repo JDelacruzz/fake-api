@@ -2,6 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../interfaces/store.interfaces';
 import { CurrencyPipe } from '@angular/common';
+import { CartStateService } from '../../../services/cart-state.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -11,8 +12,9 @@ import { CurrencyPipe } from '@angular/common';
 })
 export default class ProductDetailComponent {
   productService = inject(ProductService);
+  cartStateService = inject(CartStateService).state;
   id = input.required<string>();
-  product?: Product;
+  product!: Product;
   rate = 0;
 
   ngOnInit() {
@@ -29,5 +31,9 @@ export default class ProductDetailComponent {
 
   createRange(number: number) {
     return new Array(number).fill(0).map((n, index) => index + 1);
+  }
+
+  addToCart(product: Product) {
+    this.cartStateService.add({product, quantity: 1});
   }
 }

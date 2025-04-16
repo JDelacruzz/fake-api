@@ -9,7 +9,7 @@
           <div class="card-body">
             <!-- TODO: poner for para productos en carro -->
             @for (cartItem of state.products(); track $index) {
-              <app-cart-product [productCartItem]="cartItem"></app-cart-product>
+              <app-cart-product [productCartItem]="cartItem" (onRemove)="onRemove($event)" (onDecrease)="onDecrease($event)" (onIncrease)="onIncrease($event)"></app-cart-product>
             }
 
             <hr class="my-4" />
