@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { CartStateService } from '../../services/cart-state.service';
 import { CartProductComponent } from "../../components/cart-product/cart-product.component";
 import { ProductItemCart } from '../../interfaces/store.interfaces';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-cart',
-  imports: [CartProductComponent],
+  imports: [CartProductComponent, CurrencyPipe],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
