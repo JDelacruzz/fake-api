@@ -8,19 +8,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-lg-0">
         @if (authService.login()) {
-        <li class="nav-item">
+        <li class="nav-item me-2">
           <a class="nav-link" href="javascript:void(0)" [routerLink]="['products']" routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }">Products</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item me-2">
           <a class="nav-link" href="javascript:void(0)" [routerLink]="['users']" routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }">Users</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item me-2 bg-danger rounded-pill">
           <a class="nav-link" href="javascript:void(0)" (click)="authService.logout()">Logout</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link bg-success rounded-3 position-relative" href="javascript:void(0)" [routerLink]="['cart']"
+        <li class="nav-item me-2">
+          <a class="nav-link bg-success rounded-pill position-relative" href="javascript:void(0)" [routerLink]="['cart']"
             routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="bi bi-cart"></i>
             @if (cartState.count()>0) {
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -30,7 +30,7 @@
           </a>
         </li>
         } @else {
-        <li class="nav-item">
+        <li class="nav-item me-2">
           <a class="nav-link" href="javascript:void(0)" [routerLink]="['login']" routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }">Login</a>
         </li>
