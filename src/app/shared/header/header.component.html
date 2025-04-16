@@ -19,12 +19,6 @@
         <li class="nav-item">
           <a class="nav-link" href="javascript:void(0)" (click)="authService.logout()">Logout</a>
         </li>
-        } @else {
-        <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)" [routerLink]="['login']" routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">Login</a>
-        </li>
-        }
         <li class="nav-item">
           <a class="nav-link position-relative" href="javascript:void(0)" [routerLink]="['cart']" routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"><i class="bi bi-cart"></i>
@@ -35,6 +29,12 @@
             }
           </a>
         </li>
+        } @else {
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)" [routerLink]="['login']" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">Login</a>
+        </li>
+        }
       </ul>
     </div>
   </div>
