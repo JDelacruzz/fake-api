@@ -1,7 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { CardProductComponent } from '../../../components/card-product/card-product.component';
+import { Component, inject, resource } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../interfaces/store.interfaces';
+import { CardProductComponent } from '../../../components/card-product/card-product.component';
+import { CartStateService } from '../../../services/cart-state.service';
+import Swal from 'sweetalert2';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-product-list',
@@ -11,16 +14,24 @@ import { Product } from '../../../interfaces/store.interfaces';
 })
 export default class ProductListComponent {
   productService = inject(ProductService);
-  products: Product[] = [];
+  cartState = inject(CartStateService).state;
 
-  ngOnInit() {
-    this.getProducts();
-  }
+  productsResource = rxResource({
+    request: () => ({}),
+    loader: () => this.productService.getProducts(),
+  })
 
-  getProducts() {
-    this.productService.getProducts().subscribe((resp) => {
-      this.products = resp;
-      console.log(this.products);
+  addToCart(product: Product) {
+    this.cartState.add({
+      product,
+      quantity: 1,
+    });
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Producto añadido al carrito',
+      showConfirmButton: false,
+      timer: 1500,
     });
   }
 }

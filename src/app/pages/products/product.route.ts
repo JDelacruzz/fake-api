@@ -13,7 +13,7 @@ export default [
   },
   {
     path: 'product/:id',
-    title: 'Products-Detail',
+    title: 'Product Detail',
     loadComponent: () => import('./product-detail/product-detail.component'),
   },
 ] as Routes;

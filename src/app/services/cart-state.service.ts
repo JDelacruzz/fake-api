@@ -1,8 +1,9 @@
-import { inject, Injectable, Signal, signal } from '@angular/core';
+import { inject, Injectable, Signal } from '@angular/core';
+import { ProductItemCart, Product } from '../interfaces/store.interfaces';
 import { StorageService } from './storage.service';
-import { ProductItemCart } from '../interfaces/store.interfaces';
 import { map, Observable } from 'rxjs';
 import { signalSlice } from 'ngxtension/signal-slice';
+import Swal from 'sweetalert2';
 
 interface State {
   products: ProductItemCart[];
@@ -10,32 +11,32 @@ interface State {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartStateService {
-
   private storageService = inject(StorageService);
 
-  private inicialState: State = {
+  private inialState: State = {
     products: [],
-    loaded: false
-  }
+    loaded: false,
+  };
 
   loadProducts$ = this.storageService
     .loadProducts()
     .pipe(map((products) => ({ products, loaded: true })));
 
   state = signalSlice({
-    initialState: this.inicialState,
+    initialState: this.inialState,
     sources: [this.loadProducts$],
     selectors: (state) => ({
       count: () =>
         state().products.reduce((acc, product) => acc + product.quantity, 0),
       price: () => {
         return state().products.reduce(
-          (acc, product) => acc + product.product.price * product.quantity, 0
-        )
-      }
+          (acc, product) => acc + product.product.price * product.quantity,
+          0,
+        );
+      },
     }),
     actionSources: {
       add: (state, action$: Observable<ProductItemCart>) =>
@@ -51,22 +52,41 @@ export class CartStateService {
           this.storageService.saveProducts(state().products);
         }
         console.log(state().products);
-      }
-    })
-  })
+      },
+    }),
+  });
 
   private add(state: Signal<State>, product: ProductItemCart) {
     const isInCart = state().products.find(
-      (productInCart) => productInCart.product.id === product.product.id
+      (productInCart) => productInCart.product.id === product.product.id,
     );
 
     if (!isInCart) {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Producto añadido al carrito',
+        showConfirmButton: false,
+        timer: 1500,
+      })
       return {
-        products: [...state().products, { ...product, quantity: 1 }], loaded: true
+        products: [...state().products, { ...product, quantity: 1 }],
       };
     }
 
-    isInCart.quantity += 1;
+    if (isInCart.quantity >= 10) {
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: 'Ya no puedes añadir más de 10 unidades',
+        showConfirmButton: false,
+        timer: 1500,
+      })
+      isInCart.quantity = 10;
+    } else {
+      isInCart.quantity += 1;
+    }
+
     return {
       products: [...state().products],
     };
@@ -74,10 +94,7 @@ export class CartStateService {
 
   private remove(state: Signal<State>, id: number) {
     return {
-      products: state().products.filter(
-        (product) => product.product.id !== id
-      ),
-      loaded: true,
+      products: state().products.filter((product) => product.product.id !== id),
     };
   }
 
