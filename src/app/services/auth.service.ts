@@ -1,7 +1,7 @@
 import { effect, Injectable, signal } from '@angular/core';
 import { BaseHttpService } from './base-http.service';
 import { Observable, of } from 'rxjs';
-
+import { Login } from '../interfaces/store.interfaces';
 const STORE_KEY = 'login';
 
 const loadFromLocalStorage = () => {
@@ -21,11 +21,11 @@ export class AuthService extends BaseHttpService {
     localStorage.setItem(STORE_KEY, login);
   });
 
-  getAuthToken(): Observable<boolean> {
+  getAuth(): Observable<boolean> {
     return of(this.login());
   }
 
-  loginAuth(data: any) {
+  loginAuth(data: Login) {
     return this.http.post(`${this.apiUrl}/auth/login`, data);
   }
 

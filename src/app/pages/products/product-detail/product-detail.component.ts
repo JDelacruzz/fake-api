@@ -1,20 +1,22 @@
 import { Component, inject, input } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../interfaces/store.interfaces';
-import { CurrencyPipe } from '@angular/common';
 import { CartStateService } from '../../../services/cart-state.service';
+import Swal from 'sweetalert2';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CurrencyPipe],
+  imports: [],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
 export default class ProductDetailComponent {
   productService = inject(ProductService);
-  cartStateService = inject(CartStateService).state;
+  cartState = inject(CartStateService).state;
   id = input.required<string>();
-  product!: Product;
+  product: Product | null = null;
   rate = 0;
 
   ngOnInit() {
@@ -24,16 +26,37 @@ export default class ProductDetailComponent {
   getProduct() {
     this.productService.getProduct(this.id()).subscribe((resp) => {
       this.product = resp;
-      console.log(this.product);
       this.rate = Math.round(this.product.rating.rate);
     });
   }
+
+  productResource = rxResource({
+    request: () => ({ id: this.id() }),
+    loader: ({ request }) => {
+      return this.productService.getProduct(request.id)
+      .pipe(
+        tap((resp) => {
+          this.rate = Math.round(resp.rating.rate);
+        }),
+      );
+    },
+  })
 
   createRange(number: number) {
     return new Array(number).fill(0).map((n, index) => index + 1);
   }
 
   addToCart(product: Product) {
-    this.cartStateService.add({product, quantity: 1});
+    this.cartState.add({
+      product,
+      quantity: 1,
+    });
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Producto añadido al carrito',
+      showConfirmButton: false,
+      timer: 1500,
+    });
   }
 }

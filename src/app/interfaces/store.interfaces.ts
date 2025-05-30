@@ -48,6 +48,11 @@ export interface Name {
   lastname: string;
 }
 
+export interface Login {
+  username: string;
+  password: string;
+}
+
 export interface ProductItemCart {
   product: Product;
   quantity: number;

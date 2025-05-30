@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { CardUserComponent } from '../../components/card-user/card-user.component';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/store.interfaces';
+import { CardUserComponent } from '../../components/card-user/card-user.component';
 
 @Component({
   selector: 'app-users',

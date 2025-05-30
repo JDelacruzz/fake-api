@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guard/auth.guard';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -24,5 +24,10 @@ export const routes: Routes = [
     title: 'Cart',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/cart/cart.component'),
+  },
+  {
+    path: '**',
+    redirectTo: 'products',
+    pathMatch: 'full',
   },
 ];

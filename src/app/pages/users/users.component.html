@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row d-flex justify-content-center align-items-center h-100">
   @for (user of users; track user.id) {
-    <div class="col-3">
+    <div class="col-md-12 col-xl-4 mt-3">
       <app-card-user [user]="user"></app-card-user>
     </div>
   }
